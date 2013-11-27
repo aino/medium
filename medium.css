@@ -34,8 +34,8 @@
 
 .medium-editor-toolbar {
     position:absolute;
-    top:10px;
-    left:10px;
+    top:0;
+    left:0;
     z-index:600;
     visibility:hidden;
     background-color:#333;
@@ -61,7 +61,7 @@
     width:46px;
     background-color:#333;
     color:#fff;
-    border:none;
+    border: none;
     font:bold 16px/38px georgia, serif;
     letter-spacing:.5;
     text-decoration:none;
@@ -116,22 +116,39 @@
 }
 
 .medium-editor-toolbar-form-anchor {
-    border-radius:5px;
+    display: none;
+    background: #333;
+    color: #999;
+    border-radius:3px;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
 }
 
-.medium-editor-toolbar-form-anchor input,.medium-editor-toolbar-form-anchor a {
+.medium-editor-toolbar-form-anchor input,
+.medium-editor-toolbar-form-anchor a {
     font-family:Helvetica, Arial, sans-serif;
+    font-size:13px;
 }
 
 .medium-editor-toolbar-form-anchor input {
     box-sizing:border-box;
-    height:40px;
-    width:316px;
-    background:#333;
+    position:absolute;
+    top:2px;
+    right:2px;
+    bottom:2px;
+    left:2px;
+    background:none;
     border:none;
     color:#ccc;
     padding:6px;
+    -webkit-font-smoothing: antialiased;
 }
+
+.medium-editor-toolbar-form-anchor input::-webkit-input-placeholder{color:#555;}
+.medium-editor-toolbar-form-anchor input::-moz-placeholder{color:#555;}
 
 .medium-editor-toolbar-form-anchor input:focus {
     outline:0;
@@ -145,7 +162,14 @@
     font-size:24px;
     display:inline-block;
     text-decoration:none;
-    margin:0 10px;
+    position:absolute;
+    right:12px;
+    top:7px;
+    font-weight:normal;
+}
+
+.medium-editor-toolbar-form-anchor a:hover{
+    color:#78dad4;
 }
 
 .medium-editor-placeholder {
@@ -161,43 +185,4 @@
     font-style:italic;
 }
 
-@-webkit-keyframes pop-upwards {
-    20% {
-        -webkit-transform:matrix(0.99,0,0,1,0,2);
-        transform:matrix(0.99,0,0,1,0,2);
-        opacity:0.7;
-    }
-
-    40% {
-        -webkit-transform:matrix(1,0,0,1,0,-1);
-        transform:matrix(1,0,0,1,0,-1);
-        opacity:1;
-    }
-
-    70%,100% {
-        -webkit-transform:matrix(1,0,0,1,0,0);
-        transform:matrix(1,0,0,1,0,0);
-        opacity:1;
-    }
-}
-
-@keyframes pop-upwards {
-    20% {
-        -webkit-transform:matrix(0.99,0,0,1,0,2);
-        transform:matrix(0.99,0,0,1,0,2);
-        opacity:0.7;
-    }
-
-    40% {
-        -webkit-transform:matrix(1,0,0,1,0,-1);
-        transform:matrix(1,0,0,1,0,-1);
-        opacity:1;
-    }
-
-    70%,100% {
-        -webkit-transform:matrix(1,0,0,1,0,0);
-        transform:matrix(1,0,0,1,0,0);
-        opacity:1;
-    }
-}
-
+@-webkit-keyframes pop-upwards{0%{-webkit-transform:matrix(0.97, 0, 0, 1, 0, 12);-moz-transform:matrix(0.97, 0, 0, 1, 0, 12);-ms-transform:matrix(0.97, 0, 0, 1, 0, 12);-o-transform:matrix(0.97, 0, 0, 1, 0, 12);transform:matrix(0.97, 0, 0, 1, 0, 12);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);opacity:0}20%{-webkit-transform:matrix(0.99, 0, 0, 1, 0, 2);-moz-transform:matrix(0.99, 0, 0, 1, 0, 2);-ms-transform:matrix(0.99, 0, 0, 1, 0, 2);-o-transform:matrix(0.99, 0, 0, 1, 0, 2);transform:matrix(0.99, 0, 0, 1, 0, 2);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);opacity:0.7}40%{-webkit-transform:matrix(1, 0, 0, 1, 0, -1);-moz-transform:matrix(1, 0, 0, 1, 0, -1);-ms-transform:matrix(1, 0, 0, 1, 0, -1);-o-transform:matrix(1, 0, 0, 1, 0, -1);transform:matrix(1, 0, 0, 1, 0, -1);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}70%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}100%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}}@-moz-keyframes pop-upwards{0%{-webkit-transform:matrix(0.97, 0, 0, 1, 0, 12);-moz-transform:matrix(0.97, 0, 0, 1, 0, 12);-ms-transform:matrix(0.97, 0, 0, 1, 0, 12);-o-transform:matrix(0.97, 0, 0, 1, 0, 12);transform:matrix(0.97, 0, 0, 1, 0, 12);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);opacity:0}20%{-webkit-transform:matrix(0.99, 0, 0, 1, 0, 2);-moz-transform:matrix(0.99, 0, 0, 1, 0, 2);-ms-transform:matrix(0.99, 0, 0, 1, 0, 2);-o-transform:matrix(0.99, 0, 0, 1, 0, 2);transform:matrix(0.99, 0, 0, 1, 0, 2);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);opacity:0.7}40%{-webkit-transform:matrix(1, 0, 0, 1, 0, -1);-moz-transform:matrix(1, 0, 0, 1, 0, -1);-ms-transform:matrix(1, 0, 0, 1, 0, -1);-o-transform:matrix(1, 0, 0, 1, 0, -1);transform:matrix(1, 0, 0, 1, 0, -1);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}70%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}100%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}}@-o-keyframes pop-upwards{0%{-webkit-transform:matrix(0.97, 0, 0, 1, 0, 12);-moz-transform:matrix(0.97, 0, 0, 1, 0, 12);-ms-transform:matrix(0.97, 0, 0, 1, 0, 12);-o-transform:matrix(0.97, 0, 0, 1, 0, 12);transform:matrix(0.97, 0, 0, 1, 0, 12);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);opacity:0}20%{-webkit-transform:matrix(0.99, 0, 0, 1, 0, 2);-moz-transform:matrix(0.99, 0, 0, 1, 0, 2);-ms-transform:matrix(0.99, 0, 0, 1, 0, 2);-o-transform:matrix(0.99, 0, 0, 1, 0, 2);transform:matrix(0.99, 0, 0, 1, 0, 2);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);opacity:0.7}40%{-webkit-transform:matrix(1, 0, 0, 1, 0, -1);-moz-transform:matrix(1, 0, 0, 1, 0, -1);-ms-transform:matrix(1, 0, 0, 1, 0, -1);-o-transform:matrix(1, 0, 0, 1, 0, -1);transform:matrix(1, 0, 0, 1, 0, -1);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}70%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}100%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}}@keyframes pop-upwards{0%{-webkit-transform:matrix(0.97, 0, 0, 1, 0, 12);-moz-transform:matrix(0.97, 0, 0, 1, 0, 12);-ms-transform:matrix(0.97, 0, 0, 1, 0, 12);-o-transform:matrix(0.97, 0, 0, 1, 0, 12);transform:matrix(0.97, 0, 0, 1, 0, 12);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);opacity:0}20%{-webkit-transform:matrix(0.99, 0, 0, 1, 0, 2);-moz-transform:matrix(0.99, 0, 0, 1, 0, 2);-ms-transform:matrix(0.99, 0, 0, 1, 0, 2);-o-transform:matrix(0.99, 0, 0, 1, 0, 2);transform:matrix(0.99, 0, 0, 1, 0, 2);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);opacity:0.7}40%{-webkit-transform:matrix(1, 0, 0, 1, 0, -1);-moz-transform:matrix(1, 0, 0, 1, 0, -1);-ms-transform:matrix(1, 0, 0, 1, 0, -1);-o-transform:matrix(1, 0, 0, 1, 0, -1);transform:matrix(1, 0, 0, 1, 0, -1);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}70%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}100%{-webkit-transform:matrix(1, 0, 0, 1, 0, 0);-moz-transform:matrix(1, 0, 0, 1, 0, 0);-ms-transform:matrix(1, 0, 0, 1, 0, 0);-o-transform:matrix(1, 0, 0, 1, 0, 0);transform:matrix(1, 0, 0, 1, 0, 0);filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);opacity:1}}

@@ -506,7 +506,7 @@ if (typeof module === 'object') {
         },
 
         showAnchorForm: function () {
-            this.toolbarActions.style.display = 'none';
+            //this.toolbarActions.style.display = 'none';
             this.savedSelection = saveSelection();
             this.anchorForm.style.display = 'block';
             this.keepToolbarAlive = true;
