@@ -4,6 +4,8 @@
 
   var document = window.document
 
+  var prefix = 'medium-editor-'
+
   var saveSelection = function() {
     var i = 0
     var sel = window.getSelection()
@@ -124,7 +126,7 @@
             document.execCommand('formatBlock', false, 'p')
             if ($node.is('a'))
               document.execCommand('unlink', false, null)
-            
+
           }
         }
       })
@@ -159,7 +161,7 @@
       }
 
       return map.hasOwnProperty(type) ?
-        '<li><button class="medium-editor-action medium-editor-action-'+type+'" data-action="'+map[type][2]+
+        '<li><button class="'+prefix+'action '+prefix+'action-'+type+'" data-action="'+map[type][2]+
         '" data-element="'+map[type][1]+'">'+map[type][0]+'</button></li>' : ''
     },
 
@@ -167,7 +169,7 @@
 
     toolbarTemplate: function () {
       var btns = this.options.buttons
-      var html = '<ul id="medium-editor-toolbar-actions" class="medium-editor-toolbar-actions clearfix">'
+      var html = '<ul id="'+prefix+'toolbar-actions" class="'+prefix+'toolbar-actions clearfix">'
       var i = 0
 
       for (var i=0; i < btns.length; i++) {
@@ -175,7 +177,7 @@
       }
 
       html += '</ul>' +
-        '<div class="medium-editor-toolbar-form-anchor" id="medium-editor-toolbar-form-anchor">' +
+        '<div class="'+prefix+'toolbar-form-anchor" id="'+prefix+'toolbar-form-anchor">' +
         '    <input type="text" value="" placeholder="' + this.options.anchorInputPlaceholder + '">' +
         '    <a href="#">&times;</a>' +
         '</div>'
@@ -187,15 +189,15 @@
         return this
       this.$toolbar = this.createToolbar()
       this.keepToolbarAlive = false
-      this.$anchorForm = this.$toolbar.find('.medium-editor-toolbar-form-anchor')
+      this.$anchorForm = this.$toolbar.find('.'+prefix+'toolbar-form-anchor')
       this.$anchorInput = this.$anchorForm.find('input')
-      this.$toolbarActions = this.$toolbar.find('.medium-editor-toolbar-actions')
+      this.$toolbarActions = this.$toolbar.find('.'+prefix+'toolbar-actions')
       return this
     },
     
     createToolbar: function () {
-      return $('<div>').prop('id', 'medium-editor-toolbar-' + this.id)
-        .addClass('medium-editor-toolbar').html( this.toolbarTemplate() ).appendTo( 'body' )
+      return $('<div>').prop('id', prefix+'toolbar-' + this.id)
+        .addClass(prefix+'toolbar').html( this.toolbarTemplate() ).appendTo( 'body' )
     },
 
     bindSelect: function () {
@@ -308,7 +310,7 @@
   },
 
   setToolbarButtonStates: function () {
-    this.$toolbarActions.find('button').removeClass('medium-editor-button-active')
+    this.$toolbarActions.find('button').removeClass(prefix+'button-active')
     this.checkActiveButtons()
     return this
   },
@@ -325,7 +327,7 @@
   },
 
   activateButton: function (tag) {
-    this.$toolbar.find('[data-element="' + tag + '"]').addClass('medium-editor-button-active')
+    this.$toolbar.find('[data-element="' + tag + '"]').addClass(prefix+'button-active')
   },
 
   bindButtons: function () {
@@ -336,12 +338,12 @@
       if (typeof self.selection == 'undefined') {
         self.checkSelection(e)
       }
-      $(this).toggleClass('medium-editor-button-active')
+      $(this).toggleClass(prefix+'button-active')
       self.execAction($(this).attr('data-action'), e)
     })
 
-    $buttons.first().addClass('medium-editor-button-first')
-    $buttons.last().addClass('medium-editor-button-last')
+    $buttons.first().addClass(prefix+'button-first')
+    $buttons.last().addClass(prefix+'button-last')
     return this
   },
 
@@ -407,7 +409,7 @@
 
   hideToolbarActions: function () {
     this.keepToolbarAlive = false
-    this.$toolbar.removeClass('medium-editor-toolbar-active')
+    this.$toolbar.removeClass(prefix+'toolbar-active')
   },
 
   showToolbarActions: function () {
@@ -418,7 +420,7 @@
     this.keepToolbarAlive = false
     clearTimeout(timer)
     timer = setTimeout(function() {
-      self.$toolbar.addClass('medium-editor-toolbar-active')
+      self.$toolbar.addClass(prefix+'toolbar-active')
     }, 100)
   },
 
@@ -445,7 +447,7 @@
       self.keepToolbarAlive = false
       self.checkSelection()
     })
-    $linkCancel.on('click', function (e) {
+    $linkCancel.on('mousedown', function(e) {
       e.preventDefault()
       self.showToolbarActions()
       restoreSelection(self.savedSelection)
@@ -466,7 +468,7 @@
     $(window).on('resize', function () {
       clearTimeout(timerResize)
       timerResize = setTimeout(function () {
-        if (self.$toolbar.hasClass('medium-editor-toolbar-active')) {
+        if (self.$toolbar.hasClass(prefix+'toolbar-active')) {
           self.setToolbarPosition()
         }
       }, 100)
@@ -507,7 +509,7 @@
       var paragraphs
       var html = ''
       var p = 0
-      $(this).removeClass('medium-editor-placeholder')
+      $(this).removeClass(prefix+'placeholder')
       if (e.clipboardData && e.clipboardData.getData) {
         e.preventDefault()
         if (!self.options.disableReturn) {
@@ -530,10 +532,10 @@
   setPlaceholders: function () {
     var $element = this.$element
     var activatePlaceholder = function() {
-      $element.toggleClass('medium-editor-placeholder', !$.trim($element.text()))
+      $element.toggleClass(prefix+'placeholder', !$.trim($element.text()))
     }
     var placeholderWrapper = function (e) {
-      $(this).removeClass('medium-editor-placeholder')
+      $(this).removeClass(prefix+'placeholder')
       if (e.type !== 'keypress')
         activatePlaceholder()
     }
