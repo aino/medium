@@ -1,5 +1,7 @@
 (function(window, $) {
 
+  "use loose"
+
   var document = window.document
 
   var saveSelection = function() {
@@ -9,9 +11,9 @@
     var ranges
     if (sel.getRangeAt && sel.rangeCount) {
       ranges = []
-      for (; i < len; i++) {
+      for (; i < len; i++)
         ranges.push(sel.getRangeAt(i))
-      }
+  
       return ranges
     }
     return null
@@ -24,9 +26,9 @@
     var len = savedSel.length
     var sel = window.getSelection()
     sel.removeAllRanges()
-    for (; i < len; i++) {
+    for (; i < len; i++)
       sel.addRange(savedSel[i])
-    }
+
   }
 
   var getSelectionStart = function() {
@@ -42,9 +44,9 @@
       len = sel.rangeCount
       if (sel.rangeCount) {
         container = document.createElement('div')
-        for (; i < len; i += 1) {
+        for (; i < len; i += 1)
           container.appendChild(sel.getRangeAt(i).cloneContents())
-        }
+
         html = container.innerHTML
       }
     } else if (document.selection !== undefined) {
@@ -120,9 +122,9 @@
           $node = $( getSelectionStart() )
           if (!(self.options.disableReturn) && !$node.is('li')) {
             document.execCommand('formatBlock', false, 'p')
-            if ($node.is('a')) {
+            if ($node.is('a'))
               document.execCommand('unlink', false, null)
-            }
+            
           }
         }
       })
@@ -371,18 +373,18 @@
 
   execFormatBlock: function (el) {
 
-      var selectionData = this.getSelectionData(this.selection.anchorNode)
+    var selectionData = this.getSelectionData(this.selection.anchorNode)
 
-      // FF handles blockquote differently on formatBlock
-      // allowing nesting, we need to use outdent
-      // https://developer.mozilla.org/en-US/docs/Rich-Text_Editing_in_Mozilla
-      if (el === 'blockquote' && selectionData.el && selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote')
-        return document.execCommand('outdent', false, null)
+    // FF handles blockquote differently on formatBlock
+    // allowing nesting, we need to use outdent
+    // https://developer.mozilla.org/en-US/docs/Rich-Text_Editing_in_Mozilla
+    if (el === 'blockquote' && selectionData.el && selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote')
+      return document.execCommand('outdent', false, null)
 
-      if (selectionData.tagName === el)
-        el = 'p'
+    if (selectionData.tagName === el)
+      el = 'p'
 
-      return document.execCommand('formatBlock', false, el)
+    return document.execCommand('formatBlock', false, el)
   },
 
   getSelectionData: function (el) {
