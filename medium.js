@@ -61,9 +61,17 @@
 
   var Medium = function(element, options) {
     
-    if (!(this instanceof Medium)) {
+    if ( !(this instanceof Medium) ) {
       return new Medium(element, options)
     }
+
+    var self = this
+
+    this.element = element
+    this.$element = $(element)
+
+    if (this.$element.data('medium'))
+      return this.$element.data('medium')
 
     this.options = $.extend(options, {
       anchorInputPlaceholder: 'Paste or type a link',
@@ -77,37 +85,54 @@
       allowMultiParagraphSelection: true,
       placeholder: 'Type your text',
       secondHeader: 'h4',
-      buttons: ['bold', 'italic', 'anchor', 'header1', 'header2', 'quote', 'unorderedlist']
+      buttons: ['bold', 'italic', 'anchor', 'header1', 'header2', 'quote', 'unorderedlist', 'pre']
     })
 
-    this.element = element
-    this.$element = $(element)
-
     this.isActive = true
-    this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote']
+    this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre']
     this.id = Math.floor(Math.random()*123456789)
 
-    return this.initElements().bindSelect().bindPaste().setPlaceholders().bindWindowActions()
+    this.$element.prop('contentEditable', true).attr({
+      'data-placeholder': this.options.placeholder,
+      'data-medium-element': 'true'
+    })
+
+    this.bindParagraphCreation().bindReturn().bindTab()
+
+    if (!this.options.disableToolbar)
+       this.initToolbar().bindButtons().bindAnchorForm()
+
+    this.bindSelect().bindPaste().setPlaceholders().bindWindowActions()
+
+    this.$element.data('medium', this)
+
+    this.interval = 0
+    this.cache = this.element.innerHTML
+    this.callbacks = []
+
+    this.$element.focus(function() {
+      self.interval = setInterval(function() {
+        if ( self.cache != self.element.innerHTML ) {
+          $.each(self.callbacks, function(i, fn) {
+            fn.call(self, self.element.innerHTML)
+          })
+          self.cache = self.element.innerHTML
+        }
+      }, 20)
+    }).blur(function() {
+      clearInterval(self.interval)
+    })
+    
+    return this
+
   }
 
   Medium.prototype = {
 
     constructor: Medium,
-    
-    initElements: function () {
-      
-      this.$element.prop('contentEditable', true)
-      
-      if (!this.$element.attr('data-placeholder'))
-        this.$element.attr('data-placeholder', this.options.placeholder)
 
-      this.$element.attr('data-medium-element', true)
-      this.bindParagraphCreation().bindReturn()
-
-      if (!this.options.disableToolbar)
-         this.initToolbar().bindButtons().bindAnchorForm()
-
-      return this
+    change: function(fn) {
+      this.callbacks.push(fn)
     },
 
     bindParagraphCreation: function () {
@@ -116,12 +141,16 @@
 
         var $node = $( getSelectionStart() )
         var tagName
+
+        if ( $node.is('pre') ) {
+          console.log('PRE')
+          return false
+        }
         
         if ($node.length && $node.attr('data-medium-element') && !$node.children().length && !self.options.disableReturn) {
           document.execCommand('formatBlock', false, 'p')
         }
         if (e.which === 13 && !e.shiftKey) {
-          $node = $( getSelectionStart() )
           if (!(self.options.disableReturn) && !$node.is('li')) {
             document.execCommand('formatBlock', false, 'p')
             if ($node.is('a'))
@@ -135,11 +164,32 @@
 
     bindReturn: function () {
       var self = this
+      var stop = 
       this.$element.on('keypress', function (e) {
-        if (e.which === 13 && !e.shiftKey && self.options.disableReturn)
-          e.preventDefault()
+        if (e.which === 13) {
+          if(self.options.disableReturn)
+            return false
+          
+          if (getSelectionStart().nodeName.toLowerCase() == 'pre') {
+            document.execCommand('insertHtml', false, '\n')
+            return false
+          }
+        }
       })
       return this
+    },
+
+    bindTab: function (index) {
+      this.$element.on('keydown', function (e) {
+        if (e.which === 9) {
+          // Override tab only for pre nodes
+          var tag = getSelectionStart().tagName.toLowerCase()
+          if (tag === "pre") {
+            e.preventDefault()
+            document.execCommand('insertHtml', null, '    ')
+          }
+        }
+      })
     },
 
     buttonFactory: function(type) {
@@ -157,7 +207,8 @@
         header2:       ['h2', this.options.secondHeader, 'append-'+this.options.secondHeader],
         quote:         ['<i class="fa fa-quote-right"></i>', 'blockquote', 'append-blockquote'],
         orderedlist:   ['1.', 'ol', 'insertorderedlist'],
-        unorderedlist: ['<i class="fa fa-list"></i>', 'ul', 'insertunorderedlist']
+        unorderedlist: ['<i class="fa fa-list"></i>', 'ul', 'insertunorderedlist'],
+        pre:           ['<i class="fa fa-keyboard-o"></i>', 'pre', 'append-pre']
       }
 
       return map.hasOwnProperty(type) ?
@@ -209,6 +260,7 @@
           self.checkSelection(e)
         }, self.options.delay)
       }
+
       $('html').on('mouseup', this.checkSelectionWrapper)
 
       this.$element.on('keyup blur', this.checkSelectionWrapper)
@@ -421,7 +473,7 @@
     clearTimeout(timer)
     timer = setTimeout(function() {
       self.$toolbar.addClass(prefix+'toolbar-active')
-    }, 100)
+    }, 40)
   },
 
   showAnchorForm: function () {
@@ -476,33 +528,9 @@
     return this
   },
 
-  activate: function () {
-    if (this.isActive)
-      return
-
-    if(this.$toolbar)
-      this.$toolbar.show()
-
-    this.isActive = true
-    this.$element.prop('contentEditable', true)
-    this.bindSelect()
-  },
-
-  deactivate: function () {
-    if (!this.isActive)
-      return
-
-    this.isActive = false
-    if (this.$toolbar)
-      this.$toolbar.hide()
-
-    $('html').off('mouseup', this.checkSelectionWrapper)
-    this.$element.off('keyup blur', this.checkSelectionWrapper).removeProp('contentEditable')
-  },
-
   bindPaste: function () {
     if (!this.options.forcePlainText)
-      return
+      return this
 
     var self = this
     var pasteWrapper = function (e) {
@@ -529,7 +557,7 @@
     return this
   },
 
-  setPlaceholders: function () {
+  setPlaceholders: function() {
     var $element = this.$element
     var activatePlaceholder = function() {
       $element.toggleClass(prefix+'placeholder', !$.trim($element.text()))
