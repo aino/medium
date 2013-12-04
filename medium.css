@@ -32,7 +32,7 @@
     border-width:0 8px 8px;
 }
 
-.medium-editor-toolbar {
+.aino-medium-toolbar {
     position:absolute;
     top:0;
     left:0;
@@ -44,17 +44,17 @@
     transition:top .075s ease-out,left .075s ease-out;
 }
 
-.medium-editor-toolbar ul {
+.aino-medium-toolbar ul {
     margin:0;
     padding:0;
 }
 
-.medium-editor-toolbar li {
+.aino-medium-toolbar li {
     float:left;
     list-style:none;
 }
 
-.medium-editor-toolbar li button {
+.aino-medium-toolbar li button {
     display:block;
     box-sizing:border-box;
     height:40px;
@@ -71,35 +71,35 @@
     outline: none;
 }
 
-.medium-editor-toolbar li button.medium-editor-action-italic {
+.aino-medium-toolbar li button.aino-medium-action-italic {
     text-transform:lowercase;
     font-style:italic;
 }
 
-.medium-editor-toolbar li button:hover {
+.aino-medium-toolbar li button:hover {
     background-color:#222;
 }
 
-.medium-editor-toolbar li .medium-editor-button-first {
+.aino-medium-toolbar li .aino-medium-button-first {
     border-top-left-radius:3px;
     border-bottom-left-radius:3px;
 }
 
-.medium-editor-toolbar li .medium-editor-button-last {
+.aino-medium-toolbar li .aino-medium-button-last {
     border-top-right-radius:3px;
     border-bottom-right-radius:3px;
 }
 
-.medium-editor-toolbar li .medium-editor-button-active {
+.aino-medium-toolbar li .aino-medium-button-active {
     background-color:#222;
     color:#78dad4;
 }
 
-.medium-editor-toolbar li .medium-editor-action-underline {
+.aino-medium-toolbar li .aino-medium-action-underline {
     text-decoration:underline;
 }
 
-.medium-editor-toolbar-active {
+.aino-medium-toolbar-active {
     visibility:visible;
     -webkit-animation:pop-upwards 160ms forwards linear;
     animation:pop-upwards 160ms forwards linear;
@@ -107,15 +107,15 @@
     transition:top .075s ease-out,left .075s ease-out;
 }
 
-.medium-editor-action-bold {
+.aino-medium-action-bold {
     font-weight:bolder;
 }
 
-.medium-editor-action-italic {
+.aino-medium-action-italic {
     font-style:italic;
 }
 
-.medium-editor-toolbar-form-anchor {
+.aino-medium-toolbar-form-anchor {
     display: none;
     background: #333;
     color: #999;
@@ -127,13 +127,13 @@
     left:0;
 }
 
-.medium-editor-toolbar-form-anchor input,
-.medium-editor-toolbar-form-anchor a {
+.aino-medium-toolbar-form-anchor input,
+.aino-medium-toolbar-form-anchor a {
     font-family:Helvetica, Arial, sans-serif;
     font-size:13px;
 }
 
-.medium-editor-toolbar-form-anchor input {
+.aino-medium-toolbar-form-anchor input {
     box-sizing:border-box;
     position:absolute;
     top:2px;
@@ -147,16 +147,16 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.medium-editor-toolbar-form-anchor input::-webkit-input-placeholder{color:#555;}
-.medium-editor-toolbar-form-anchor input::-moz-placeholder{color:#555;}
+.aino-medium-toolbar-form-anchor input::-webkit-input-placeholder{color:#555;}
+.aino-medium-toolbar-form-anchor input::-moz-placeholder{color:#555;}
 
-.medium-editor-toolbar-form-anchor input:focus {
+.aino-medium-toolbar-form-anchor input:focus {
     outline:0;
     -moz-appearance:none;
     -webkit-appearance:none;
 }
 
-.medium-editor-toolbar-form-anchor a {
+.aino-medium-toolbar-form-anchor a {
     color:#fff;
     font-weight:bolder;
     font-size:24px;
@@ -168,15 +168,15 @@
     font-weight:normal;
 }
 
-.medium-editor-toolbar-form-anchor a:hover{
+.aino-medium-toolbar-form-anchor a:hover{
     color:#78dad4;
 }
 
-.medium-editor-placeholder {
+.aino-medium-placeholder {
     position:relative;
 }
 
-.medium-editor-placeholder:after {
+.aino-medium-placeholder:after {
     position:absolute;
     top:0;
     left:0;

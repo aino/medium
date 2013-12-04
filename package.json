@@ -1,0 +1,14 @@
+{
+  "name": "aino-medium",
+  "version": "0.0.1",
+  "description": "Medium editor",
+  "main": "medium.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aino/medium"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=1.10.0"
+  }
+}

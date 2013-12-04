@@ -1,10 +1,8 @@
 (function(window, $) {
 
-  "use loose"
-
   var document = window.document
 
-  var prefix = 'medium-editor-'
+  var prefix = 'aino-medium-'
 
   var saveSelection = function() {
     var i = 0
